@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.4.0
+Date: 2025.12.28
+  Changes:
+    - updated license
+    - items above certain stack size are now ignored
+---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 2025.12.27
+  Changes:
+    - added setting "pack ammo"
+    - added setting "pack equipment"
+    - removed ability to use quality modules on packing and unpacking recipes
+---------------------------------------------------------------------------------------------------
+Version: 0.2.1
+Date: 2025.12.26
+  Changes:
+    - if item has "non-stackable" flag then it will be ignored (crate with this item won't be created)
+---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 2025.12.25
+  Changes:
+    - default item import location property now transfers to cargo crates
+---------------------------------------------------------------------------------------------------
+Version: 0.1.3
+Date: 2025.12.25
+  Changes:
+    - added code that ignore items without properly defined subgroup
+---------------------------------------------------------------------------------------------------
+Version: 0.1.2
+Date: 2025.12.25
+  Changes:
+    - added lignumis as optional hidden dependancy to make it load before cargo crates
+    - icons are now properly scalled based on it's size
+---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 2025.12.25
+  Changes:
+    - improved compatibility with planet mods
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 2025.12.25
+  Changes:
+    - release
+---------------------------------------------------------------------------------------------------

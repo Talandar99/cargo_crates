@@ -1,0 +1,17 @@
+{
+    "name": "cargo_crates",
+    "version": "0.4.0",
+    "title": "Cargo Crates",
+    "author": "Talandar",
+    "dependencies": [
+        "base >= 2.0",
+        "(?) Cerys-Moon-of-Fulgora",
+        "(?) planet-muluna",
+        "(?) lignumis",
+        "(?) alchemy-khemia",
+        "? quality",
+        "? space-age"
+    ],
+    "description": "Pack large quantities of goods into single-use crates for easier bulk logistics.",
+    "factorio_version": "2.0"
+}
