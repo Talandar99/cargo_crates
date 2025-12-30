@@ -23,6 +23,13 @@ data:extend({
 
 data:extend({
 	{
+		type = "recipe-category",
+		name = "cargo-crates",
+	},
+})
+
+data:extend({
+	{
 		type = "technology",
 		name = "cargo-crates",
 		icon = "__cargo_crates__/thumbnail.png",

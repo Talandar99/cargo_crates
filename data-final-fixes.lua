@@ -79,7 +79,8 @@ local function generate_crates_from(prototypes)
 
 				table.insert(recipes, {
 					type = "recipe",
-					category = "advanced-crafting",
+					--category = "advanced-crafting",
+					category = "cargo-crates",
 					subgroup = "cargo-crates-items",
 					name = crate_name,
 					allow_quality = false,
@@ -105,7 +106,8 @@ local function generate_crates_from(prototypes)
 
 				table.insert(recipes, {
 					type = "recipe",
-					category = "advanced-crafting",
+					--category = "advanced-crafting",
+					category = "cargo-crates",
 					subgroup = "cargo-crates-recipe",
 					icons = {
 						{ icon = "__base__/graphics/icons/wooden-chest.png", icon_size = 64, shift = { 0, 0 } },
@@ -168,4 +170,10 @@ end
 generate_crates_from(data.raw.item)
 if settings.startup["cargo-crates-pack-ammo"].value then
 	generate_crates_from(data.raw.ammo)
+end
+
+if settings.startup["cargo-crates-can-use-regular-assembling-machines"].value then
+	table.insert(data.raw["assembling-machine"]["assembling-machine-1"].crafting_categories, "cargo-crates")
+	table.insert(data.raw["assembling-machine"]["assembling-machine-2"].crafting_categories, "cargo-crates")
+	table.insert(data.raw["assembling-machine"]["assembling-machine-3"].crafting_categories, "cargo-crates")
 end
