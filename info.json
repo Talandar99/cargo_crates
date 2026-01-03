@@ -1,6 +1,6 @@
 {
     "name": "cargo_crates",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "title": "Cargo Crates",
     "author": "Talandar",
     "dependencies": [
@@ -10,6 +10,8 @@
         "(?) lignumis",
         "(?) alchemy-khemia",
         "(?) cloud-city",
+        "(?) quality-processing",
+        "(?) exotic-space-industries-remembrance",
         "? quality",
         "? space-age"
     ],

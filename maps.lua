@@ -85,7 +85,17 @@ table.insert(loaders, function()
 		if recipe.results ~= nil then
 			for _, result in pairs(recipe.results) do
 				if result.type == "item" then
-					item_to_recipe[result.name][recipe.name] = true
+					if item_to_recipe[result.name] then
+						item_to_recipe[result.name][recipe.name] = true
+					else
+						log(
+							"[cargo_crates] recipe '"
+								.. recipe.name
+								.. "' produces missing item '"
+								.. result.name
+								.. "' which mean it's declared in data-final-fixes. Please define your item earlier"
+						)
+					end
 				end
 			end
 		end

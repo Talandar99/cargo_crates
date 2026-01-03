@@ -1,7 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.6.0
+Date: 2026.01.30
+  Bugfixes:
+    - added changes that should allow most mods that define item in data-final-fixes run but items 
+      can't be put in crate
+    - in order to fix other load order issues quality-processing and exotic-space-industries-remembrance 
+      has been added as optional dependancies
+  Changes:
+    - added loger that kindly ask to define item later. If you are mod author and you see that your 
+      item is not automaticly added to crate please check logs
+---------------------------------------------------------------------------------------------------
 Version: 0.5.1
 Date: 2025.12.30
-  Changes:
+  Bugfixes:
     - added cloud city as optional dependancy to fix load order issues
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.0
