@@ -1,6 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.7.0
+Date: 2026.01.21
+  Changes:
+    - added setting to pack spoilables (turned on by default)
+    - added setting to pack capsules (turned on by default)
+    - updated locale for unpacking now it's "Unpack cargo crate ()" instead of "Cargo crate ()"
+---------------------------------------------------------------------------------------------------
 Version: 0.6.0
-Date: 2026.01.30
+Date: 2026.01.03
   Bugfixes:
     - added changes that should allow most mods that define item in data-final-fixes run but items 
       can't be put in crate
