@@ -19,13 +19,13 @@ local spoiled_crate_by_key = {}
 local spoiled_crates = {}
 local spoiled_recipes = {}
 
-if
-	data.raw.item
-	and data.raw.item["spoilage"]
-	and data.raw.item["spoilage"].icon
-	and not data.raw.item["spoilage"].icon_size
-then
-	data.raw.item["spoilage"].icon_size = 64
+-- icon_size=64 if icon size does not exist to make sure atlas won't explode
+for _, type_tbl in pairs(data.raw) do
+	for _, proto in pairs(type_tbl) do
+		if proto and proto.icon and not proto.icon_size and not proto.icons then
+			proto.icon_size = 64
+		end
+	end
 end
 local function generate_crates_from(prototypes)
 	local crates = {}
@@ -114,10 +114,26 @@ local function generate_crates_from(prototypes)
 
 							if spoil_name then
 								-- REUSE --
+								local p = prototypes[spoil_name] -- ten sam typ prototypów (tu: item/ammo/capsule zależnie od wywołania)
+
 								if
 									s_item
+									and p
+									and p.icon
+									and p.name ~= "wooden-chest"
 									and not string.find(spoil_name, "^cargo%-crate%")
-									and ((s_item.stack_size or 1) * 2) == (item.stack_size * 2)
+									and not p.hidden
+									and not p.hidden_in_factoriopedia
+									and p.group ~= "other"
+									and p.subgroup ~= "spawnables"
+									and p.subgroup ~= "parameters"
+									and p.order ~= nil
+									and p.name ~= "pirateship-cannonball"
+									and not has_flag(p.flags, "not-stackable")
+									and not p.place_result
+									and not p.spoil_to_trigger_result
+									and p.stack_size < 10000
+									and ((p.stack_size or 1) * 2) == (item.stack_size * 2)
 								then
 									crate.spoil_result = "cargo-crate-" .. spoil_name
 								else
@@ -323,8 +339,12 @@ if settings.startup["cargo-crates-pack-capsules"].value then
 end
 
 if settings.startup["cargo-crates-pack-spoilables"].value then
-	data:extend(spoiled_crates)
-	data:extend(spoiled_recipes)
+	if next(spoiled_crates) ~= nil then
+		data:extend(spoiled_crates)
+	end
+	if next(spoiled_recipes) ~= nil then
+		data:extend(spoiled_recipes)
+	end
 end
 
 if settings.startup["cargo-crates-can-use-regular-assembling-machines"].value then

@@ -1,7 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.7.2
+Date: 2026.01.22
+  Bugfixes:
+    - fixed crash caused by not existing spoilables crate (Seabloom mod crash)
+    - fixed crash caused unknown item.icon_size
+---------------------------------------------------------------------------------------------------
+Version: 0.7.1
+Date: 2026.01.21
+  Bugfixes:
+    - crash caused by empty spoilables table
+---------------------------------------------------------------------------------------------------
 Version: 0.7.0
 Date: 2026.01.21
   Changes:
+    - spoilables and capsules can now be packed into crates
     - added setting to pack spoilables (turned on by default)
     - added setting to pack capsules (turned on by default)
     - updated locale for unpacking now it's "Unpack cargo crate ()" instead of "Cargo crate ()"
