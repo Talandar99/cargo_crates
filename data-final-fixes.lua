@@ -114,7 +114,7 @@ local function generate_crates_from(prototypes)
 
 							if spoil_name then
 								-- REUSE --
-								local p = prototypes[spoil_name] -- ten sam typ prototypów (tu: item/ammo/capsule zależnie od wywołania)
+								local p = prototypes[spoil_name]
 
 								if
 									s_item
@@ -179,10 +179,12 @@ local function generate_crates_from(prototypes)
 											category = "cargo-crates",
 											subgroup = "cargo-crates-recipe",
 											name = "unpack-" .. spoiled_crate_name,
-											enabled = false,
-											allow_quality = false,
-											result_is_always_fresh = false,
 											reset_freshness_on_craft = false,
+											result_is_always_fresh = false,
+											hide_from_signal_gui = false,
+											allow_quality = false,
+											auto_recycle = false,
+											enabled = false,
 											maximum_productivity = 0,
 
 											icons = {
@@ -232,8 +234,7 @@ local function generate_crates_from(prototypes)
 						end
 						-- end --
 						table.insert(crates, crate)
-
-						-- unpacking ---
+						-- packing recipe
 						table.insert(recipes, {
 							type = "recipe",
 							--category = "advanced-crafting",
@@ -262,14 +263,18 @@ local function generate_crates_from(prototypes)
 								},
 							},
 						})
+						-- unpacking ---
 
 						table.insert(recipes, {
 							type = "recipe",
 							--category = "advanced-crafting",
 							category = "cargo-crates",
 							subgroup = "cargo-crates-recipe",
-							result_is_always_fresh = false,
+							name = "unpack-" .. crate_name,
 							reset_freshness_on_craft = false,
+							result_is_always_fresh = false,
+							hide_from_signal_gui = false,
+							auto_recycle = false,
 							enabled = false,
 							maximum_productivity = 0,
 							icons = {
@@ -287,7 +292,6 @@ local function generate_crates_from(prototypes)
 									scale = 0.3,
 								},
 							},
-							name = "unpack-" .. crate_name,
 							localised_name = {
 								"recipe-name.cargo-crate-unpack",
 								tostring(item.stack_size * 2),

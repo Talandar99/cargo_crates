@@ -1,4 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.7.5
+Date: 2026.02.02
+  Bugfixes:
+    - cargo crates should now always default to assembling machines if pelagos is not installed
+---------------------------------------------------------------------------------------------------
+Version: 0.7.4
+Date: 2026.01.30
+  Bugfixes:
+    - cargo crates recipes are now present in circuit signal menu
+---------------------------------------------------------------------------------------------------
+Version: 0.7.3
+Date: 2026.01.23
+  Bugfixes:
+    - unpacking recipes no longer affect recyling recipes
+---------------------------------------------------------------------------------------------------
 Version: 0.7.2
 Date: 2026.01.22
   Bugfixes:
