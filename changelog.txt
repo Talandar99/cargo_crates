@@ -1,10 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.8.1
+Date: 2026.02.15
+  Balancing:
+    - TFMG: research time changed to match other reserches in overhaul (30 ->  16)
+---------------------------------------------------------------------------------------------------
 Version: 0.8.0
 Date: 2026.02.15
   Changes:
     - added dedicated compatibility for TFMG (The Factory Must Grow) by oobanooba
   Bugfixes:
-    - fixed runtime crash caused by game not having any items of certain type 
+    - fixed crash caused by game not having any items of certain type 
       (capsules in this case but now should work fine in similar cases as well)
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.5

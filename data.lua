@@ -67,7 +67,7 @@ elseif mods["TFMG"] then
 				ingredients = {
 					{ "introspection-science", 1 },
 				},
-				time = 30,
+				time = 16,
 			},
 			order = "c-a",
 		},
