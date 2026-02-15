@@ -1,12 +1,13 @@
 {
     "name": "cargo_crates",
-    "version": "0.7.5",
+    "version": "0.8.0",
     "title": "Cargo Crates",
     "author": "Talandar",
     "dependencies": [
         "base >= 2.0",
         "? quality",
         "? space-age",
+        "? TFMG",
         "(?) Cerys-Moon-of-Fulgora",
         "(?) planet-muluna",
         "(?) lignumis",

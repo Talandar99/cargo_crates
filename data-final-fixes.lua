@@ -27,6 +27,14 @@ for _, type_tbl in pairs(data.raw) do
 		end
 	end
 end
+
+local empty_crate_item_name = "wooden-chest"
+local crate_icon_path = "__base__/graphics/icons/wooden-chest.png"
+if mods["TFMG"] then
+	empty_crate_item_name = "steel-chest"
+	crate_icon_path = "__base__/graphics/icons/steel-chest.png"
+end
+
 local function generate_crates_from(prototypes)
 	local crates = {}
 	local recipes = {}
@@ -49,7 +57,7 @@ local function generate_crates_from(prototypes)
 				if true then
 					if
 						item.icon
-						and item_name ~= "wooden-chest"
+						and item_name ~= empty_crate_item_name
 						and not string.find(item_name, "^cargo%-crate%")
 						and not item.hidden
 						and not item.hidden_in_factoriopedia
@@ -83,7 +91,7 @@ local function generate_crates_from(prototypes)
 							weight = crate_weight * item.stack_size,
 							default_import_location = item.default_import_location,
 							icons = {
-								{ icon = "__base__/graphics/icons/wooden-chest.png", icon_size = 64 },
+								{ icon = crate_icon_path, icon_size = 64 },
 								{
 									icon = item.icon,
 									icon_size = item.icon_size,
@@ -120,7 +128,7 @@ local function generate_crates_from(prototypes)
 									s_item
 									and p
 									and p.icon
-									and p.name ~= "wooden-chest"
+									and p.name ~= empty_crate_item_name
 									and not string.find(spoil_name, "^cargo%-crate%")
 									and not p.hidden
 									and not p.hidden_in_factoriopedia
@@ -160,7 +168,7 @@ local function generate_crates_from(prototypes)
 											},
 											icon_size = 64,
 											icons = {
-												{ icon = "__base__/graphics/icons/wooden-chest.png", icon_size = 64 },
+												{ icon = crate_icon_path, icon_size = 64 },
 												{
 													icon = (s_item and s_item.icon) or item.icon,
 													icon_size = (s_item and s_item.icon_size) or item.icon_size or 64,
@@ -189,7 +197,7 @@ local function generate_crates_from(prototypes)
 
 											icons = {
 												{
-													icon = "__base__/graphics/icons/wooden-chest.png",
+													icon = crate_icon_path,
 													icon_size = 64,
 													shift = { 0, 0 },
 												},
@@ -248,7 +256,7 @@ local function generate_crates_from(prototypes)
 							maximum_productivity = 0,
 							-- Pack recipe
 							ingredients = {
-								{ type = "item", name = "wooden-chest", amount = 1 },
+								{ type = "item", name = empty_crate_item_name, amount = 1 },
 								{
 									type = "item",
 									name = item_name,
@@ -278,7 +286,7 @@ local function generate_crates_from(prototypes)
 							enabled = false,
 							maximum_productivity = 0,
 							icons = {
-								{ icon = "__base__/graphics/icons/wooden-chest.png", icon_size = 64, shift = { 0, 0 } },
+								{ icon = crate_icon_path, icon_size = 64, shift = { 0, 0 } },
 								{
 									icon = item.icon,
 									icon_size = item.icon_size,
@@ -329,8 +337,13 @@ local function generate_crates_from(prototypes)
 			end
 		end
 	end
-	data:extend(crates)
-	data:extend(recipes)
+
+	if next(crates) ~= nil then
+		data:extend(crates)
+	end
+	if next(recipes) ~= nil then
+		data:extend(recipes)
+	end
 end
 
 generate_crates_from(data.raw.item)
@@ -355,4 +368,8 @@ if settings.startup["cargo-crates-can-use-regular-assembling-machines"].value th
 	table.insert(data.raw["assembling-machine"]["assembling-machine-1"].crafting_categories, "cargo-crates")
 	table.insert(data.raw["assembling-machine"]["assembling-machine-2"].crafting_categories, "cargo-crates")
 	table.insert(data.raw["assembling-machine"]["assembling-machine-3"].crafting_categories, "cargo-crates")
+	if mods["TFMG"] then
+		table.insert(data.raw["assembling-machine"]["assembling-machine"].crafting_categories, "cargo-crates")
+		table.insert(data.raw["assembling-machine"]["micro-assembler"].crafting_categories, "cargo-crates")
+	end
 end
