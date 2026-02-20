@@ -1,11 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.8.2
+Date: 2026-02-15
+  Changes:
+    - added german locale made by Schlumpf
+---------------------------------------------------------------------------------------------------
 Version: 0.8.1
-Date: 2026.02.15
+Date: 2026-02-15
   Balancing:
     - TFMG: research time changed to match other reserches in overhaul (30 ->  16)
 ---------------------------------------------------------------------------------------------------
 Version: 0.8.0
-Date: 2026.02.15
+Date: 2026-02-15
   Changes:
     - added dedicated compatibility for TFMG (The Factory Must Grow) by oobanooba
   Bugfixes:
@@ -13,33 +18,33 @@ Date: 2026.02.15
       (capsules in this case but now should work fine in similar cases as well)
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.5
-Date: 2026.02.02
+Date: 2026-02-02
   Bugfixes:
     - cargo crates should now always default to assembling machines if pelagos is not installed
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.4
-Date: 2026.01.30
+Date: 2026-01-30
   Bugfixes:
     - cargo crates recipes are now present in circuit signal menu
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.3
-Date: 2026.01.23
+Date: 2026-01-23
   Bugfixes:
     - unpacking recipes no longer affect recyling recipes
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.2
-Date: 2026.01.22
+Date: 2026-01-22
   Bugfixes:
     - fixed crash caused by not existing spoilables crate (Seabloom mod crash)
     - fixed crash caused unknown item.icon_size
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.1
-Date: 2026.01.21
+Date: 2026-01-21
   Bugfixes:
     - crash caused by empty spoilables table
 ---------------------------------------------------------------------------------------------------
 Version: 0.7.0
-Date: 2026.01.21
+Date: 2026-01-21
   Changes:
     - spoilables and capsules can now be packed into crates
     - added setting to pack spoilables (turned on by default)
@@ -47,7 +52,7 @@ Date: 2026.01.21
     - updated locale for unpacking now it's "Unpack cargo crate ()" instead of "Cargo crate ()"
 ---------------------------------------------------------------------------------------------------
 Version: 0.6.0
-Date: 2026.01.03
+Date: 2026-01-03
   Bugfixes:
     - added changes that should allow most mods that define item in data-final-fixes run but items 
       can't be put in crate
@@ -58,56 +63,56 @@ Date: 2026.01.03
       item is not automaticly added to crate please check logs
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.1
-Date: 2025.12.30
+Date: 2025-12-30
   Bugfixes:
     - added cloud city as optional dependancy to fix load order issues
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.0
-Date: 2025.12.30
+Date: 2025-12-30
   Changes:
     - group changes
 ---------------------------------------------------------------------------------------------------
 Version: 0.4.0
-Date: 2025.12.28
+Date: 2025-12-28
   Changes:
     - updated license
     - items above certain stack size are now ignored
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.0
-Date: 2025.12.27
+Date: 2025-12-27
   Changes:
     - added setting "pack ammo"
     - added setting "pack equipment"
     - removed ability to use quality modules on packing and unpacking recipes
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.1
-Date: 2025.12.26
+Date: 2025-12-26
   Changes:
     - if item has "non-stackable" flag then it will be ignored (crate with this item won't be created)
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.0
-Date: 2025.12.25
+Date: 2025-12-25
   Changes:
     - default item import location property now transfers to cargo crates
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.3
-Date: 2025.12.25
+Date: 2025-12-25
   Changes:
     - added code that ignore items without properly defined subgroup
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.2
-Date: 2025.12.25
+Date: 2025-12-25
   Changes:
     - added lignumis as optional hidden dependancy to make it load before cargo crates
     - icons are now properly scalled based on it's size
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.1
-Date: 2025.12.25
+Date: 2025-12-25
   Changes:
     - improved compatibility with planet mods
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.0
-Date: 2025.12.25
+Date: 2025-12-25
   Changes:
     - release
 ---------------------------------------------------------------------------------------------------
