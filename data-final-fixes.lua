@@ -284,6 +284,7 @@ local function generate_crates_from(prototypes)
 							hide_from_signal_gui = false,
 							auto_recycle = false,
 							enabled = false,
+							allow_quality = false,
 							maximum_productivity = 0,
 							icons = {
 								{ icon = crate_icon_path, icon_size = 64, shift = { 0, 0 } },
