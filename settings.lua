@@ -35,6 +35,13 @@ data:extend({
 		order = "cargo-crates-e",
 		hidden = true,
 	},
+	{
+		type = "bool-setting",
+		name = "cargo-crates-zip-texture",
+		setting_type = "startup",
+		default_value = true,
+		order = "cargo-crates-z",
+	},
 })
 
 local function force_setting(setting_type, setting_name, value)

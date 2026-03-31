@@ -35,6 +35,9 @@ if mods["TFMG"] then
 	crate_icon_path = "__base__/graphics/icons/steel-chest.png"
 end
 
+if settings.startup["cargo-crates-zip-texture"].value then
+	crate_icon_path = "__cargo_crates__/zip.png"
+end
 local function generate_crates_from(prototypes)
 	local crates = {}
 	local recipes = {}
@@ -73,20 +76,51 @@ local function generate_crates_from(prototypes)
 					then
 						local crate_weight = weight.lookup[item_name]
 						local crate_name = "cargo-crate-" .. item_name
+						local localised_name_packing = {
+							"item-name.cargo-crate",
+							tostring(item.stack_size * 2),
+							item.localised_name or (item.place_as_equipment_result and {
+								"equipment-name." .. item.name,
+							}) or {
+								"item-name." .. item.name,
+							},
+						}
+						local localised_name_unpacking = {
+							"recipe-name.cargo-crate-unpack",
+							tostring(item.stack_size * 2),
+							item.localised_name or (item.place_as_equipment_result and {
+								"equipment-name." .. item.name,
+							}) or {
+								"item-name." .. item.name,
+							},
+						}
 
-						local crate = {
-							type = "item",
-							name = crate_name,
-							allow_quality = false,
-							localised_name = {
-								"item-name.cargo-crate",
+						if settings.startup["cargo-crates-zip-texture"].value then
+							localised_name_packing = {
+								"item-name.cargo-crate-zip",
 								tostring(item.stack_size * 2),
 								item.localised_name or (item.place_as_equipment_result and {
 									"equipment-name." .. item.name,
 								}) or {
 									"item-name." .. item.name,
 								},
-							},
+							}
+							localised_name_unpacking = {
+								"recipe-name.cargo-crate-unpack-zip",
+								tostring(item.stack_size * 2),
+								item.localised_name or (item.place_as_equipment_result and {
+									"equipment-name." .. item.name,
+								}) or {
+									"item-name." .. item.name,
+								},
+							}
+						end
+
+						local crate = {
+							type = "item",
+							name = crate_name,
+							allow_quality = false,
+							localised_name = localised_name_packing,
 							icon_size = 64,
 							weight = crate_weight * item.stack_size,
 							default_import_location = item.default_import_location,
@@ -161,11 +195,7 @@ local function generate_crates_from(prototypes)
 											name = spoiled_crate_name,
 											weight = crate_weight * item.stack_size,
 											allow_quality = false,
-											localised_name = {
-												"item-name.cargo-crate",
-												tostring(item.stack_size * 2),
-												(s_item and s_item.localised_name) or { "item-name." .. spoil_name },
-											},
+											localised_name = localised_name_packing,
 											icon_size = 64,
 											icons = {
 												{ icon = crate_icon_path, icon_size = 64 },
@@ -216,11 +246,7 @@ local function generate_crates_from(prototypes)
 												},
 											},
 
-											localised_name = {
-												"recipe-name.cargo-crate-unpack",
-												tostring(item.stack_size * 2),
-												(s_item and s_item.localised_name) or { "item-name." .. spoil_name },
-											},
+											localised_name = localised_name_unpacking,
 
 											ingredients = {
 												{ type = "item", name = spoiled_crate_name, amount = 1 },
@@ -301,15 +327,7 @@ local function generate_crates_from(prototypes)
 									scale = 0.3,
 								},
 							},
-							localised_name = {
-								"recipe-name.cargo-crate-unpack",
-								tostring(item.stack_size * 2),
-								item.localised_name or (item.place_as_equipment_result and {
-									"equipment-name." .. item.name,
-								}) or {
-									"item-name." .. item.name,
-								},
-							},
+							localised_name = localised_name_unpacking,
 							ingredients = {
 								{
 									type = "item",
