@@ -37,9 +37,9 @@ data:extend({
 	},
 	{
 		type = "bool-setting",
-		name = "cargo-crates-zip-texture",
+		name = "use-cargo-crates-zip-texture",
 		setting_type = "startup",
-		default_value = true,
+		default_value = false,
 		order = "cargo-crates-z",
 	},
 })

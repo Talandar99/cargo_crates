@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.10.1
+Date: 2026-04-04
+  Changes:
+    - reverted back april fools changes. They exist as a setting. So you can toggle them whenever 
+      you like
+---------------------------------------------------------------------------------------------------
 Version: 0.10.0
 Date: 2026-04-01
   Changes:

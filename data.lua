@@ -2,7 +2,7 @@ local crate_icon_path = "__base__/graphics/icons/wooden-chest.png"
 if mods["TFMG"] then
 	crate_icon_path = "__base__/graphics/icons/steel-chest.png"
 end
-if settings.startup["cargo-crates-zip-texture"].value then
+if settings.startup["use-cargo-crates-zip-texture"].value then
 	crate_icon_path = "__cargo_crates__/zip.png"
 end
 
@@ -36,10 +36,10 @@ data:extend({
 	},
 })
 
-if settings.startup["cargo-crates-zip-texture"].value then
+if settings.startup["use-cargo-crates-zip-texture"].value then
 	data.raw["item-group"]["cargo-crates"].localised_name = { "item-group-name.cargo-crates-zip" }
 end
-if settings.startup["cargo-crates-zip-texture"].value then
+if settings.startup["use-cargo-crates-zip-texture"].value then
 	data:extend({
 		{
 			type = "technology",

@@ -35,7 +35,7 @@ if mods["TFMG"] then
 	crate_icon_path = "__base__/graphics/icons/steel-chest.png"
 end
 
-if settings.startup["cargo-crates-zip-texture"].value then
+if settings.startup["use-cargo-crates-zip-texture"].value then
 	crate_icon_path = "__cargo_crates__/zip.png"
 end
 local function generate_crates_from(prototypes)
@@ -95,7 +95,7 @@ local function generate_crates_from(prototypes)
 							},
 						}
 
-						if settings.startup["cargo-crates-zip-texture"].value then
+						if settings.startup["use-cargo-crates-zip-texture"].value then
 							localised_name_packing = {
 								"item-name.cargo-crate-zip",
 								tostring(item.stack_size * 2),
