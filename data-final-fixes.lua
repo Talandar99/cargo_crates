@@ -19,15 +19,6 @@ local spoiled_crate_by_key = {}
 local spoiled_crates = {}
 local spoiled_recipes = {}
 
--- icon_size=64 if icon size does not exist to make sure atlas won't explode
-for _, type_tbl in pairs(data.raw) do
-	for _, proto in pairs(type_tbl) do
-		if proto and proto.icon and not proto.icon_size and not proto.icons then
-			proto.icon_size = 64
-		end
-	end
-end
-
 local empty_crate_item_name = "wooden-chest"
 local crate_icon_path = "__base__/graphics/icons/wooden-chest.png"
 if mods["TFMG"] then
@@ -128,7 +119,7 @@ local function generate_crates_from(prototypes)
 								{ icon = crate_icon_path, icon_size = 64 },
 								{
 									icon = item.icon,
-									icon_size = item.icon_size,
+									icon_size = item.icon_size or 64,
 									scale = 0.2 * (64 / (item.icon_size or 64)),
 									shift = { 0, -6 },
 								},
@@ -201,9 +192,9 @@ local function generate_crates_from(prototypes)
 												{ icon = crate_icon_path, icon_size = 64 },
 												{
 													icon = (s_item and s_item.icon) or item.icon,
-													icon_size = (s_item and s_item.icon_size) or item.icon_size or 64,
+													icon_size = (s_item and (s_item.icon_size or 64)) or item.icon_size or 64,
 													scale = 0.2
-														* (64 / ((s_item and s_item.icon_size) or item.icon_size or 64)),
+														* (64 / ((s_item and (s_item.icon_size or 64)) or item.icon_size or 64)),
 													shift = { 0, -6 },
 												},
 											},
@@ -233,9 +224,9 @@ local function generate_crates_from(prototypes)
 												},
 												{
 													icon = (s_item and s_item.icon) or item.icon,
-													icon_size = (s_item and s_item.icon_size) or item.icon_size or 64,
+													icon_size = (s_item and (s_item.icon_size or 64)) or item.icon_size or 64,
 													scale = 0.3
-														* (64 / ((s_item and s_item.icon_size) or item.icon_size or 64)),
+														* (64 / ((s_item and (s_item.icon_size or 64)) or item.icon_size or 64)),
 													shift = { 5, 5 },
 												},
 												{
@@ -316,7 +307,7 @@ local function generate_crates_from(prototypes)
 								{ icon = crate_icon_path, icon_size = 64, shift = { 0, 0 } },
 								{
 									icon = item.icon,
-									icon_size = item.icon_size,
+									icon_size = item.icon_size or 64,
 									scale = 0.3 * (64 / (item.icon_size or 64)),
 									shift = { 5, 5 },
 								},
