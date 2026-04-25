@@ -1,6 +1,6 @@
 {
     "name": "cargo_crates",
-    "version": "0.10.1",
+    "version": "0.10.2",
     "title": "Cargo Crates",
     "author": "Talandar",
     "dependencies": [
