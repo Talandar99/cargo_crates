@@ -1,5 +1,10 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.11.1
+Version: 0.11.3
+Date: 2026-05-16
+  Bugfixes:
+    - added extra check that checks if spoil result exist and have proper icon
+---------------------------------------------------------------------------------------------------
+Version: 0.11.2
 Date: 2026-05-16
   Changes:
     - Added hidden setting for packing multiplier. 

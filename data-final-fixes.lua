@@ -210,114 +210,117 @@ local function generate_crates_from(prototypes)
 								or data.raw.capsule[spoil_name]
 								or data.raw.ammo[spoil_name]
 								or data.raw.tool[spoil_name]
+							if s_item and s_item.icon then
+								if spoil_name then
+									local p = prototypes[spoil_name]
 
-							if spoil_name then
-								local p = prototypes[spoil_name]
-
-								if
-									s_item
-									and p
-									and p.icon
-									and p.name ~= empty_crate_item_name
-									and not string.find(spoil_name, "^cargo%-crate%")
-									and not p.hidden
-									and not p.hidden_in_factoriopedia
-									and p.group ~= "other"
-									and p.subgroup ~= "spawnables"
-									and p.subgroup ~= "parameters"
-									and p.order ~= nil
-									and p.name ~= "pirateship-cannonball"
-									and not has_flag(p.flags, "not-stackable")
-									and not p.place_result
-									and not p.spoil_to_trigger_result
-									and p.stack_size < 10000
-									and ((p.stack_size or 1) * cargo_crates_packing_multiplier)
-										== (item.stack_size * cargo_crates_packing_multiplier)
-								then
-									crate.spoil_result = "cargo-crate-" .. spoil_name
-								else
-									-- new item --
-									if s_item.name == "spoilage" then
-										localised_name_packing = {
-											"item-name.cargo-crate",
-											tostring(item.stack_size * cargo_crates_packing_multiplier),
-											item.localised_name or (item.place_as_equipment_result and {
-												"equipment-name." .. item.name,
-											}) or {
-												"item-name.spoilage",
-											},
-										}
-										localised_name_unpacking = {
-											"recipe-name.cargo-crate-unpack",
-											tostring(item.stack_size * cargo_crates_packing_multiplier),
-											item.localised_name or (item.place_as_equipment_result and {
-												"equipment-name." .. item.name,
-											}) or {
-												"item-name.spoilage",
-											},
-										}
-									end
-									local key = spoil_name
-										.. "|"
-										.. tostring(item.stack_size * cargo_crates_packing_multiplier)
-									local spoiled_crate_name = spoiled_crate_by_key[key]
-
-									if not spoiled_crate_name then
-										spoiled_crate_name = "cargo-crate-spoiled-"
-											.. spoil_name
-											.. "-x"
-											.. tostring(item.stack_size * cargo_crates_packing_multiplier)
-										spoiled_crate_by_key[key] = spoiled_crate_name
-
-										table.insert(spoiled_crates, {
-											type = "item",
-											name = spoiled_crate_name,
-											weight = crate_weight * item.stack_size,
-											allow_quality = false,
-											localised_name = localised_name_packing,
-											icon_size = 64,
-											icons = {
-												{ icon = crate_icon_path, icon_size = 64 },
-												{
-													icon = (s_item and s_item.icon) or item.icon,
-													icon_size = (s_item and (s_item.icon_size or 64))
-														or item.icon_size
-														or 64,
-													scale = 0.2
-														* (
-															64
-															/ (
-																(s_item and (s_item.icon_size or 64))
-																or item.icon_size
-																or 64
-															)
-														),
-													shift = { 0, -6 },
+									if
+										s_item
+										and p
+										and p.icon
+										and p.name ~= empty_crate_item_name
+										and not string.find(spoil_name, "^cargo%-crate%")
+										and not p.hidden
+										and not p.hidden_in_factoriopedia
+										and p.group ~= "other"
+										and p.subgroup ~= "spawnables"
+										and p.subgroup ~= "parameters"
+										and p.order ~= nil
+										and p.name ~= "pirateship-cannonball"
+										and not has_flag(p.flags, "not-stackable")
+										and not p.place_result
+										and not p.spoil_to_trigger_result
+										and p.stack_size < 10000
+										and ((p.stack_size or 1) * cargo_crates_packing_multiplier)
+											== (item.stack_size * cargo_crates_packing_multiplier)
+									then
+										crate.spoil_result = "cargo-crate-" .. spoil_name
+									else
+										-- new item --
+										if s_item.name == "spoilage" then
+											localised_name_packing = {
+												"item-name.cargo-crate",
+												tostring(item.stack_size * cargo_crates_packing_multiplier),
+												item.localised_name or (item.place_as_equipment_result and {
+													"equipment-name." .. item.name,
+												}) or {
+													"item-name.spoilage",
 												},
-											},
-											stack_size = 1,
-											subgroup = "cargo-crates-items",
-											order = "a[" .. spoil_name .. "]-[" .. tostring(
-												item.stack_size * cargo_crates_packing_multiplier
-											) .. "]",
-										})
-										table.insert(
-											spoiled_recipes,
-											make_unpack_recipe(
-												spoiled_crate_name,
-												spoil_name,
-												item.stack_size,
-												s_item or item,
-												localised_name_unpacking
-											)
-										)
-										table.insert(data.raw.technology["cargo-crates"].effects, {
-											type = "unlock-recipe",
-											recipe = "unpack-" .. spoiled_crate_name,
-										})
-									end
+											}
+											localised_name_unpacking = {
+												"recipe-name.cargo-crate-unpack",
+												tostring(item.stack_size * cargo_crates_packing_multiplier),
+												item.localised_name or (item.place_as_equipment_result and {
+													"equipment-name." .. item.name,
+												}) or {
+													"item-name.spoilage",
+												},
+											}
+										end
+										local key = spoil_name
+											.. "|"
+											.. tostring(item.stack_size * cargo_crates_packing_multiplier)
+										local spoiled_crate_name = spoiled_crate_by_key[key]
 
-									crate.spoil_result = spoiled_crate_name
+										if not spoiled_crate_name then
+											spoiled_crate_name = "cargo-crate-spoiled-"
+												.. spoil_name
+												.. "-x"
+												.. tostring(item.stack_size * cargo_crates_packing_multiplier)
+											spoiled_crate_by_key[key] = spoiled_crate_name
+
+											table.insert(spoiled_crates, {
+												type = "item",
+												name = spoiled_crate_name,
+												weight = crate_weight * item.stack_size,
+												allow_quality = false,
+												localised_name = localised_name_packing,
+												icon_size = 64,
+												icons = {
+													{ icon = crate_icon_path, icon_size = 64 },
+													{
+														icon = (s_item and s_item.icon) or item.icon,
+														icon_size = (s_item and (s_item.icon_size or 64))
+															or item.icon_size
+															or 64,
+														scale = 0.2
+															* (
+																64
+																/ (
+																	(s_item and (s_item.icon_size or 64))
+																	or item.icon_size
+																	or 64
+																)
+															),
+														shift = { 0, -6 },
+													},
+												},
+												stack_size = 1,
+												subgroup = "cargo-crates-items",
+												order = "a["
+													.. spoil_name
+													.. "]-["
+													.. tostring(item.stack_size * cargo_crates_packing_multiplier)
+													.. "]",
+											})
+											table.insert(
+												spoiled_recipes,
+												make_unpack_recipe(
+													spoiled_crate_name,
+													spoil_name,
+													item.stack_size,
+													s_item or item,
+													localised_name_unpacking
+												)
+											)
+											table.insert(data.raw.technology["cargo-crates"].effects, {
+												type = "unlock-recipe",
+												recipe = "unpack-" .. spoiled_crate_name,
+											})
+										end
+
+										crate.spoil_result = spoiled_crate_name
+									end
 								end
 							end
 						end
