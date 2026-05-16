@@ -29,6 +29,72 @@ end
 if settings.startup["use-cargo-crates-zip-texture"].value then
 	crate_icon_path = "__cargo_crates__/zip.png"
 end
+
+local cargo_crates_packing_multiplier = 100
+
+local function make_pack_recipe(crate_name, item_name, item)
+	return {
+		type = "recipe",
+		category = "cargo-crates",
+		subgroup = "cargo-crates-items",
+		name = crate_name,
+		allow_quality = false,
+		enabled = false,
+		result_is_always_fresh = false,
+		reset_freshness_on_craft = false,
+		maximum_productivity = 0,
+		ingredients = {
+			{ type = "item", name = empty_crate_item_name, amount = 1 },
+			{ type = "item", name = item_name, amount = (item.stack_size or 1) * cargo_crates_packing_multiplier },
+		},
+		results = {
+			{ type = "item", name = crate_name, amount = 1 },
+		},
+	}
+end
+
+local function make_unpack_recipe(crate_name, result_name, result_amount, icon_item, localised_name_unpacking)
+	local icon_size = icon_item.icon_size or 64
+
+	return {
+		type = "recipe",
+		category = "cargo-crates",
+		subgroup = "cargo-crates-recipe",
+		name = "unpack-" .. crate_name,
+
+		reset_freshness_on_craft = false,
+		result_is_always_fresh = false,
+		hide_from_signal_gui = false,
+		auto_recycle = false,
+		enabled = false,
+		allow_quality = false,
+		maximum_productivity = 0,
+
+		icons = {
+			{ icon = crate_icon_path, icon_size = 64, shift = { 0, 0 } },
+			{
+				icon = icon_item.icon,
+				icon_size = icon_size,
+				scale = 0.3 * (64 / icon_size),
+				shift = { 5, 5 },
+			},
+			{
+				icon = "__base__/graphics/icons/arrows/down-right-arrow.png",
+				icon_size = 64,
+				shift = { -5, -5 },
+				scale = 0.3,
+			},
+		},
+		localised_name = localised_name_unpacking,
+		ingredients = {
+			{ type = "item", name = crate_name, amount = 1 },
+		},
+		results = {
+			{ type = "item", name = result_name, amount = result_amount * cargo_crates_packing_multiplier },
+		},
+	}
+end
+
 local function generate_crates_from(prototypes)
 	local crates = {}
 	local recipes = {}
@@ -69,7 +135,7 @@ local function generate_crates_from(prototypes)
 						local crate_name = "cargo-crate-" .. item_name
 						local localised_name_packing = {
 							"item-name.cargo-crate",
-							tostring(item.stack_size * 2),
+							tostring(item.stack_size * cargo_crates_packing_multiplier),
 							item.localised_name or (item.place_as_equipment_result and {
 								"equipment-name." .. item.name,
 							}) or {
@@ -78,7 +144,7 @@ local function generate_crates_from(prototypes)
 						}
 						local localised_name_unpacking = {
 							"recipe-name.cargo-crate-unpack",
-							tostring(item.stack_size * 2),
+							tostring(item.stack_size * cargo_crates_packing_multiplier),
 							item.localised_name or (item.place_as_equipment_result and {
 								"equipment-name." .. item.name,
 							}) or {
@@ -89,7 +155,7 @@ local function generate_crates_from(prototypes)
 						if settings.startup["use-cargo-crates-zip-texture"].value then
 							localised_name_packing = {
 								"item-name.cargo-crate-zip",
-								tostring(item.stack_size * 2),
+								tostring(item.stack_size * cargo_crates_packing_multiplier),
 								item.localised_name or (item.place_as_equipment_result and {
 									"equipment-name." .. item.name,
 								}) or {
@@ -98,7 +164,7 @@ local function generate_crates_from(prototypes)
 							}
 							localised_name_unpacking = {
 								"recipe-name.cargo-crate-unpack-zip",
-								tostring(item.stack_size * 2),
+								tostring(item.stack_size * cargo_crates_packing_multiplier),
 								item.localised_name or (item.place_as_equipment_result and {
 									"equipment-name." .. item.name,
 								}) or {
@@ -146,7 +212,6 @@ local function generate_crates_from(prototypes)
 								or data.raw.tool[spoil_name]
 
 							if spoil_name then
-								-- REUSE --
 								local p = prototypes[spoil_name]
 
 								if
@@ -166,19 +231,22 @@ local function generate_crates_from(prototypes)
 									and not p.place_result
 									and not p.spoil_to_trigger_result
 									and p.stack_size < 10000
-									and ((p.stack_size or 1) * 2) == (item.stack_size * 2)
+									and ((p.stack_size or 1) * cargo_crates_packing_multiplier)
+										== (item.stack_size * cargo_crates_packing_multiplier)
 								then
 									crate.spoil_result = "cargo-crate-" .. spoil_name
 								else
 									-- new item --
-									local key = spoil_name .. "|" .. tostring(item.stack_size * 2)
+									local key = spoil_name
+										.. "|"
+										.. tostring(item.stack_size * cargo_crates_packing_multiplier)
 									local spoiled_crate_name = spoiled_crate_by_key[key]
 
 									if not spoiled_crate_name then
 										spoiled_crate_name = "cargo-crate-spoiled-"
 											.. spoil_name
 											.. "-x"
-											.. tostring(item.stack_size * 2)
+											.. tostring(item.stack_size * cargo_crates_packing_multiplier)
 										spoiled_crate_by_key[key] = spoiled_crate_name
 
 										table.insert(spoiled_crates, {
@@ -192,61 +260,37 @@ local function generate_crates_from(prototypes)
 												{ icon = crate_icon_path, icon_size = 64 },
 												{
 													icon = (s_item and s_item.icon) or item.icon,
-													icon_size = (s_item and (s_item.icon_size or 64)) or item.icon_size or 64,
+													icon_size = (s_item and (s_item.icon_size or 64))
+														or item.icon_size
+														or 64,
 													scale = 0.2
-														* (64 / ((s_item and (s_item.icon_size or 64)) or item.icon_size or 64)),
+														* (
+															64
+															/ (
+																(s_item and (s_item.icon_size or 64))
+																or item.icon_size
+																or 64
+															)
+														),
 													shift = { 0, -6 },
 												},
 											},
 											stack_size = 1,
 											subgroup = "cargo-crates-items",
-											order = "a[" .. spoil_name .. "]-[" .. tostring(item.stack_size * 2) .. "]",
+											order = "a[" .. spoil_name .. "]-[" .. tostring(
+												item.stack_size * cargo_crates_packing_multiplier
+											) .. "]",
 										})
-
-										table.insert(spoiled_recipes, {
-											type = "recipe",
-											category = "cargo-crates",
-											subgroup = "cargo-crates-recipe",
-											name = "unpack-" .. spoiled_crate_name,
-											reset_freshness_on_craft = false,
-											result_is_always_fresh = false,
-											hide_from_signal_gui = false,
-											allow_quality = false,
-											auto_recycle = false,
-											enabled = false,
-											maximum_productivity = 0,
-
-											icons = {
-												{
-													icon = crate_icon_path,
-													icon_size = 64,
-													shift = { 0, 0 },
-												},
-												{
-													icon = (s_item and s_item.icon) or item.icon,
-													icon_size = (s_item and (s_item.icon_size or 64)) or item.icon_size or 64,
-													scale = 0.3
-														* (64 / ((s_item and (s_item.icon_size or 64)) or item.icon_size or 64)),
-													shift = { 5, 5 },
-												},
-												{
-													icon = "__base__/graphics/icons/arrows/down-right-arrow.png",
-													icon_size = 64,
-													shift = { -5, -5 },
-													scale = 0.3,
-												},
-											},
-
-											localised_name = localised_name_unpacking,
-
-											ingredients = {
-												{ type = "item", name = spoiled_crate_name, amount = 1 },
-											},
-											results = {
-												{ type = "item", name = spoil_name, amount = item.stack_size * 2 },
-											},
-										})
-
+										table.insert(
+											spoiled_recipes,
+											make_unpack_recipe(
+												spoiled_crate_name,
+												spoil_name,
+												item.stack_size,
+												s_item or item,
+												localised_name_unpacking
+											)
+										)
 										table.insert(data.raw.technology["cargo-crates"].effects, {
 											type = "unlock-recipe",
 											recipe = "unpack-" .. spoiled_crate_name,
@@ -260,80 +304,18 @@ local function generate_crates_from(prototypes)
 						-- end --
 						table.insert(crates, crate)
 						-- packing recipe
-						table.insert(recipes, {
-							type = "recipe",
-							--category = "advanced-crafting",
-							category = "cargo-crates",
-							subgroup = "cargo-crates-items",
-							name = crate_name,
-							allow_quality = false,
-							enabled = false,
-							result_is_always_fresh = false,
-							reset_freshness_on_craft = false,
-							maximum_productivity = 0,
-							-- Pack recipe
-							ingredients = {
-								{ type = "item", name = empty_crate_item_name, amount = 1 },
-								{
-									type = "item",
-									name = item_name,
-									amount = (item.stack_size or 1) * 2,
-								},
-							},
-							results = {
-								{
-									type = "item",
-									name = crate_name,
-									amount = 1,
-								},
-							},
-						})
+						table.insert(recipes, make_pack_recipe(crate_name, item_name, item))
 						-- unpacking ---
-
-						table.insert(recipes, {
-							type = "recipe",
-							--category = "advanced-crafting",
-							category = "cargo-crates",
-							subgroup = "cargo-crates-recipe",
-							name = "unpack-" .. crate_name,
-							reset_freshness_on_craft = false,
-							result_is_always_fresh = false,
-							hide_from_signal_gui = false,
-							auto_recycle = false,
-							enabled = false,
-							allow_quality = false,
-							maximum_productivity = 0,
-							icons = {
-								{ icon = crate_icon_path, icon_size = 64, shift = { 0, 0 } },
-								{
-									icon = item.icon,
-									icon_size = item.icon_size or 64,
-									scale = 0.3 * (64 / (item.icon_size or 64)),
-									shift = { 5, 5 },
-								},
-								{
-									icon = "__base__/graphics/icons/arrows/down-right-arrow.png",
-									icon_size = 64,
-									shift = { -5, -5 },
-									scale = 0.3,
-								},
-							},
-							localised_name = localised_name_unpacking,
-							ingredients = {
-								{
-									type = "item",
-									name = crate_name,
-									amount = 1,
-								},
-							},
-							results = {
-								{
-									type = "item",
-									name = item_name,
-									amount = (item.stack_size or 1) * 2,
-								},
-							},
-						})
+						table.insert(
+							recipes,
+							make_unpack_recipe(
+								crate_name,
+								item_name,
+								(item.stack_size or 1),
+								item,
+								localised_name_unpacking
+							)
+						)
 						table.insert(data.raw.technology["cargo-crates"].effects, {
 							type = "unlock-recipe",
 							recipe = "unpack-" .. crate_name,
