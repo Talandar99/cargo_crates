@@ -30,7 +30,7 @@ if settings.startup["use-cargo-crates-zip-texture"].value then
 	crate_icon_path = "__cargo_crates__/zip.png"
 end
 
-local cargo_crates_packing_multiplier = 100
+local cargo_crates_packing_multiplier = settings.startup["cargo-crates-packing-multiplier"].value
 
 local function make_pack_recipe(crate_name, item_name, item)
 	return {
@@ -237,6 +237,26 @@ local function generate_crates_from(prototypes)
 									crate.spoil_result = "cargo-crate-" .. spoil_name
 								else
 									-- new item --
+									if s_item.name == "spoilage" then
+										localised_name_packing = {
+											"item-name.cargo-crate",
+											tostring(item.stack_size * cargo_crates_packing_multiplier),
+											item.localised_name or (item.place_as_equipment_result and {
+												"equipment-name." .. item.name,
+											}) or {
+												"item-name.spoilage",
+											},
+										}
+										localised_name_unpacking = {
+											"recipe-name.cargo-crate-unpack",
+											tostring(item.stack_size * cargo_crates_packing_multiplier),
+											item.localised_name or (item.place_as_equipment_result and {
+												"equipment-name." .. item.name,
+											}) or {
+												"item-name.spoilage",
+											},
+										}
+									end
 									local key = spoil_name
 										.. "|"
 										.. tostring(item.stack_size * cargo_crates_packing_multiplier)

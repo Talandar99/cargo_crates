@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.11.0
+Date: 2026-05-16
+  Changes:
+    - Added hidden setting for packing multiplier. 
+  Bugfixes:
+    - spoilables now are properly named "spoilage" if they spoil into spoilage. 
+      Currently they were named after thing they spoiled from
+---------------------------------------------------------------------------------------------------
 Version: 0.10.2
 Date: 2026-04-25
   Bugfixes:

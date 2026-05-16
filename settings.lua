@@ -40,7 +40,16 @@ data:extend({
 		name = "use-cargo-crates-zip-texture",
 		setting_type = "startup",
 		default_value = false,
-		order = "cargo-crates-z",
+		order = "cargo-crates-f",
+	},
+	{
+		type = "int-setting",
+		name = "cargo-crates-packing-multiplier",
+		setting_type = "startup",
+		minimum_value = 2,
+		default_value = 2,
+		maximum_value = 100,
+		order = "cargo-crates-g",
 	},
 })
 
@@ -57,3 +66,4 @@ local function force_setting(setting_type, setting_name, value)
 	end
 end
 force_setting("bool", "cargo-crates-can-use-regular-assembling-machines", true)
+force_setting("bool", "cargo-crates-packing-multiplier", 2)
