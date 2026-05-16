@@ -50,6 +50,7 @@ data:extend({
 		default_value = 2,
 		maximum_value = 100,
 		order = "cargo-crates-g",
+		hidden = true,
 	},
 })
 
